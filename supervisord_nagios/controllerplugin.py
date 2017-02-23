@@ -113,7 +113,12 @@ class NagiosControllerPlugin(ControllerPluginBase):
         for process in [self.supervisor.getProcessInfo(process) for process in options.process]:
             exit_code, status = self._check_process(process, options.warn, options.crit)
             exit_codes.append(exit_code)
-            statuses.append(status)
+            #statuses.append(status)
+            text_splitted = text.split(',')
+            for item in text_splitted:
+                if item[-7:] != "RUNNING":
+                    statuses.append(item)
+
 
         return [max(exit_codes)], statuses
 
